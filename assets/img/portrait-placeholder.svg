@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="720" viewBox="0 0 600 720" role="img" aria-labelledby="title desc">
+<title id="title">Personal photo placeholder</title><desc id="desc">A neutral placeholder for Haoran Xu's future portrait. No real photograph is displayed.</desc>
+<rect width="600" height="720" rx="12" fill="#eef1f4"/>
+<circle cx="300" cy="264" r="87" fill="#c9d1db"/>
+<path d="M130 505c0-99 76-162 170-162s170 63 170 162" fill="#c9d1db"/>
+<path d="M190 562h220" stroke="#a7b3c2" stroke-width="2"/>
+<text x="300" y="607" text-anchor="middle" font-family="Arial,sans-serif" font-size="23" fill="#546577">PHOTO PLACEHOLDER</text>
+</svg>

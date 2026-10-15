@@ -1,0 +1,56 @@
+---
+layout: editorial
+---
+<article class="reader-shell" data-bilingual-essay data-title-en="{{ page.title_en | escape }}" data-title-zh="{{ page.title_zh | escape }}">
+  <a class="reader-back" href="{{ '/reflections/' | relative_url }}"><span aria-hidden="true">←</span> All reflections</a>
+  <header class="reader-header">
+    <p class="eyebrow">A personal essay</p>
+    <h1 class="reader-title" lang="en">{{ page.title_en }}</h1>
+    <p class="reader-subtitle" lang="zh-Hans">{{ page.title_zh }}</p>
+    <p class="reader-byline">Haoran Xu</p>
+  </header>
+  <div class="reader-toolbar">
+    <span class="reader-toolbar-label">Reading language</span>
+    <div class="reader-language" role="group" aria-label="Article language">
+      <button type="button" data-reader-language="en" lang="en" aria-pressed="true" aria-controls="article-en">English</button>
+      <button type="button" data-reader-language="zh" lang="zh-Hans" aria-pressed="false" aria-controls="article-zh">中文</button>
+    </div>
+  </div>
+  <p class="reader-announcement" role="status" aria-live="polite"></p>
+  <noscript>
+    <p class="reader-fallback"><a href="#article-en">Read English</a> / <a href="#article-zh" lang="zh-Hans">阅读中文</a></p>
+    <style>
+      .reader-language {
+        display: none;
+      }
+      #article-zh[hidden] {
+        display: block !important;
+      }
+      .reader-language-heading {
+        display: block !important;
+      }
+      #article-zh {
+        margin-top: 4rem;
+        border-top: 1px solid var(--line);
+        padding-top: 2rem;
+      }
+    </style>
+  </noscript>
+  {% capture source_en %}{% include {{ page.source_en }} %}{% endcapture %}
+  {% capture source_zh %}{% include {{ page.source_zh }} %}{% endcapture %}
+  {% assign title_line_en = page.title_en | prepend: '# ' %}
+  {% assign source_en = source_en | replace: "'", '&#39;' %}
+  {% assign title_line_zh = page.title_zh | prepend: '# ' %}
+  {% assign quote_plain = '<p><strong>乘兴而去，兴尽而归。</strong></p>' %}
+  {% assign quote_styled = '<p class="reader-quote" lang="zh-Hans"><strong>乘兴而去，兴尽而归。</strong></p>' %}
+  <div class="reader-panel" id="article-en" lang="en" aria-label="English essay">
+    {{ source_en | remove_first: title_line_en | markdownify | replace: quote_plain, quote_styled }}
+  </div>
+  <div class="reader-panel" id="article-zh" lang="zh-Hans" aria-label="中文文章" hidden>
+    <h2 class="reader-language-heading">{{ page.title_zh }}</h2>
+    {{ source_zh | remove_first: title_line_zh | markdownify | replace: quote_plain, quote_styled }}
+  </div>
+  <footer class="reader-end">
+    <a class="arrow-link" href="{{ '/reflections/' | relative_url }}">Back to reflections <span aria-hidden="true">←</span></a>
+  </footer>
+</article>

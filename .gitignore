@@ -1,0 +1,42 @@
+_site
+.bundle
+.DS_store
+.idea
+.jekyll-cache
+.jekyll-metadata
+.ruby-version
+.sass-cache
+.tweet-cache
+.venv
+assets/libs/
+assets/rendercv/rendercv_output/*.typ
+al-folio-upgrade-report.md
+node_modules/
+output/playwright/
+test-results/
+vendor
+
+# Python bytecode from bin/ helper scripts
+__pycache__/
+*.pyc
+
+# Private local tooling and rendered review files
+.local/
+preview/
+_config.deploy.yml
+
+# Incoming manuscript package stays local.
+haoran-reflections-codex.zip
+
+# Local-only package copies and retired sample drafts.
+docs/on-living-source/
+docs/archive/
+
+# Credentials and unpublished working material.
+.env
+.env.*
+*.pem
+*.key
+private/
+research-data/
+manuscripts/

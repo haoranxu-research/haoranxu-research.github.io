@@ -1,0 +1,322 @@
+/* Reflections-only reading styles. About and Research are unaffected. */
+@font-face {
+  font-family: "Noto Serif SC";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/noto-serif-sc-on-living.woff2") format("woff2");
+}
+.essay-index {
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 90px;
+}
+.essay-index-entry {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) 32px;
+  gap: 22px;
+  align-items: start;
+  padding: 36px 0 40px;
+  border-top: 1px solid var(--line);
+}
+.essay-index-number {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--terra);
+  padding-top: 12px;
+}
+.essay-index-copy h2 {
+  font-family: var(--serif);
+  font-size: 38px;
+  letter-spacing: -0.035em;
+  line-height: 1.3;
+  transition: color 180ms;
+}
+.essay-index-entry:hover h2 {
+  color: var(--terra);
+}
+.essay-index-title-zh {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, SimSun, serif;
+  font-size: 15px;
+  color: var(--muted);
+  margin-top: 8px;
+  line-height: 1.9;
+}
+.essay-index-excerpt {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.7;
+  max-width: 640px;
+  margin: 22px 0 19px;
+  color: var(--muted);
+}
+.essay-index-languages {
+  font-size: 11px;
+  color: var(--sage);
+}
+.essay-index-arrow {
+  color: var(--terra);
+  font-size: 22px;
+  padding-top: 9px;
+}
+.reader-shell {
+  width: min(100%, 720px);
+  margin-inline: auto;
+  overflow-anchor: none;
+}
+.reader-back {
+  display: inline-flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 35px;
+  padding: 8px 0;
+}
+.reader-back:hover {
+  color: var(--terra);
+}
+.reader-header {
+  padding: 47px 0 30px;
+}
+.reader-title {
+  font-family: var(--serif);
+  font-size: 62px;
+  letter-spacing: -0.045em;
+  line-height: 1.2;
+  margin: 16px 0 10px;
+  text-wrap: balance;
+}
+.reader-title[lang="zh-Hans"] {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, SimSun, serif;
+  font-size: 40px;
+  letter-spacing: 0.025em;
+  line-height: 1.6;
+}
+.reader-subtitle {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.85;
+  color: var(--muted);
+}
+.reader-subtitle[lang="zh-Hans"] {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, SimSun, serif;
+  font-size: 16px;
+}
+.reader-byline {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 20px;
+}
+.reader-toolbar {
+  position: sticky;
+  top: 96px;
+  z-index: 12;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 0;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.reader-toolbar-label {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+.reader-language {
+  display: flex;
+  gap: 8px;
+}
+.reader-language button {
+  background: transparent;
+  border: 0;
+  padding: 9px 11px;
+  font-size: 13px;
+  min-width: 66px;
+  min-height: 44px;
+  position: relative;
+  color: var(--muted);
+}
+.reader-language button[aria-pressed="true"] {
+  color: var(--terra);
+}
+.reader-language button[aria-pressed="true"]::after {
+  content: "";
+  height: 1px;
+  position: absolute;
+  left: 11px;
+  right: 11px;
+  bottom: 5px;
+  background: var(--terra);
+}
+.reader-language button:hover {
+  color: var(--ink);
+}
+.reader-announcement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.reader-panel {
+  padding-top: 36px;
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.9;
+  letter-spacing: 0;
+  overflow-wrap: break-word;
+  scroll-margin-top: 180px;
+}
+.reader-panel > p {
+  margin: 0 0 27px;
+}
+.reader-panel em {
+  color: inherit;
+}
+.reader-panel[lang="zh-Hans"] {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", STSong, SimSun, serif;
+  font-size: 19px;
+  line-height: 2.1;
+  letter-spacing: 0.015em;
+  text-align: justify;
+  text-justify: inter-ideograph;
+  line-break: strict;
+}
+.reader-panel[lang="zh-Hans"] > p {
+  margin-bottom: 29px;
+}
+.reader-panel .reader-quote {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, SimSun, serif;
+  font-size: 25px;
+  line-height: 1.9;
+  text-align: left;
+  letter-spacing: 0.035em;
+  border-left: 1px solid var(--terra-art);
+  padding: 7px 0 7px 23px;
+  margin: 38px 0 25px;
+}
+.reader-quote strong {
+  font-weight: 400;
+}
+.reader-panel[lang="en"] .reader-quote + p {
+  font-size: 19px;
+  color: var(--muted);
+  margin-top: -8px;
+}
+.reader-panel[lang="en"] .reader-quote + p > em {
+  color: inherit;
+}
+.reader-language-heading {
+  display: none;
+  font-size: 30px;
+  font-weight: 400;
+  margin-bottom: 26px;
+}
+.reader-end {
+  border-top: 1px solid var(--line);
+  margin-top: 39px;
+  padding: 27px 0 56px;
+}
+.reader-fallback {
+  margin-top: 18px;
+  font-size: 14px;
+  color: var(--terra);
+}
+@media (max-width: 850px) {
+  .reader-shell {
+    max-width: 660px;
+  }
+}
+@media (max-width: 650px) {
+  .essay-index {
+    margin-bottom: 55px;
+  }
+  .essay-index-entry {
+    grid-template-columns: 24px minmax(0, 1fr) 24px;
+    gap: 12px;
+    padding: 28px 0;
+  }
+  .essay-index-number {
+    font-size: 9px;
+    padding-top: 8px;
+  }
+  .essay-index-copy h2 {
+    font-size: 31px;
+  }
+  .essay-index-title-zh {
+    font-size: 14px;
+  }
+  .essay-index-excerpt {
+    font-size: 17px;
+    margin: 18px 0;
+  }
+  .reader-back {
+    margin-top: 21px;
+  }
+  .reader-header {
+    padding: 29px 0 24px;
+  }
+  .reader-title {
+    font-size: 47px;
+  }
+  .reader-title[lang="zh-Hans"] {
+    font-size: 29px;
+    line-height: 1.65;
+    letter-spacing: 0;
+  }
+  .reader-subtitle[lang="zh-Hans"] {
+    font-size: 15px;
+  }
+  .reader-toolbar {
+    top: 108px;
+    padding: 7px 0;
+    gap: 8px;
+  }
+  .reader-toolbar-label {
+    font-size: 9px;
+    letter-spacing: 0.02em;
+  }
+  .reader-language {
+    gap: 3px;
+  }
+  .reader-language button {
+    padding: 8px 9px;
+    min-width: 59px;
+  }
+  .reader-panel {
+    padding-top: 29px;
+    font-size: 18px;
+    line-height: 1.95;
+  }
+  .reader-panel > p {
+    margin-bottom: 24px;
+  }
+  .reader-panel[lang="zh-Hans"] {
+    font-size: 17.5px;
+    line-height: 2.05;
+    letter-spacing: 0;
+    text-align: left;
+    text-justify: auto;
+  }
+  .reader-panel[lang="zh-Hans"] > p {
+    margin-bottom: 25px;
+  }
+  .reader-panel .reader-quote {
+    font-size: 21px;
+    padding-left: 16px;
+    letter-spacing: 0;
+    margin-top: 32px;
+  }
+  .reader-panel[lang="en"] .reader-quote + p {
+    font-size: 17px;
+  }
+  .reader-end {
+    padding-bottom: 40px;
+  }
+}

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    {% include metadata.liquid %}
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"
+    >
+    <script>
+      try {
+        const preference = localStorage.getItem('theme');
+        document.documentElement.dataset.theme =
+          preference === 'dark' || preference === 'light' ? preference : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      } catch (_) {}
+    </script>
+    <link rel="icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type="image/svg+xml">
+    <link rel="stylesheet" href="{{ '/assets/css/fonts.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/editorial.css' | relative_url }}">
+    {% if page.editorial_section == 'reflections' %}
+      <link rel="stylesheet" href="{{ '/assets/css/reader.css' | relative_url }}">
+      <script src="{{ '/assets/js/reader.js' | relative_url }}" defer></script>
+    {% endif %}
+    <link rel="canonical" href="{{ page.url | absolute_url }}">
+    <script src="{{ '/assets/js/editorial.js' | relative_url }}" defer></script>
+  </head>
+  <body class="editorial page-{{ page.editorial_section }}">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="header-inner page-width">
+        <a class="wordmark" href="{{ '/' | relative_url }}" aria-label="Haoran Xu home"
+          >Haoran Xu<span class="wordmark-dot" aria-hidden="true">.</span></a
+        >
+        <nav class="editorial-nav" aria-label="Main navigation">
+          <a
+            href="{{ '/' | relative_url }}"
+            {% if page.editorial_section == 'about' %}
+              aria-current="page"
+            {% endif %}
+            ><span class="nav-index">01</span> About</a
+          >
+          <a
+            href="{{ '/research/' | relative_url }}"
+            {% if page.editorial_section == 'research' %}
+              aria-current="page"
+            {% endif %}
+            ><span class="nav-index">02</span> Research</a
+          >
+          <a
+            href="{{ '/reflections/' | relative_url }}"
+            {% if page.editorial_section == 'reflections' %}
+              aria-current="page"
+            {% endif %}
+            ><span class="nav-index">03</span> Reflections</a
+          >
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
+          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4.2 4.2l2.1 2.1m11.4 11.4 2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 14.1A8.4 8.4 0 0 1 9.9 4a8.4 8.4 0 1 0 10.1 10.1Z"/>
+          </svg>
+        </button>
+      </div>
+      {% if page.editorial_section == 'reflections' %}<div class="reading-progress" aria-hidden="true"></div>{% endif %}
+    </header>
+    <main id="main" class="page-width" tabindex="-1">{{ content }}</main>
+    <footer class="editorial-footer page-width">
+      <p>© {{ site.time | date: '%Y' }} Haoran Xu</p>
+      <p><span class="footer-mark" aria-hidden="true">✳</span> A space for learning &amp; reflection.</p>
+      <a href="{{ site.data.contact.github_url }}" rel="me noopener" target="_blank">GitHub <span aria-hidden="true">↗</span></a>
+    </footer>
+  </body>
+</html>

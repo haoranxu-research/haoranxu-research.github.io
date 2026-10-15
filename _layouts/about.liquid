@@ -1,0 +1,39 @@
+---
+layout: default
+---
+<!-- Site-owned composition; default shell and photo rendering remain gem-owned. -->
+<article class="academic-about">
+  <div class="about-grid">
+    <div class="about-copy">
+      <header class="post-header">
+        <h1 class="post-title">
+          {{ site.first_name }}
+          {{ site.last_name }}
+        </h1>
+        <p class="academic-affiliation">
+          <span>{{ page.subtitle }}</span>
+          <a href="https://www.zju.edu.cn/english/">Zhejiang University</a>
+        </p>
+      </header>
+      <div class="about-biography">{{ content }}</div>
+    </div>
+    {% if page.profile.image %}
+      <div class="about-portrait">
+        {% assign portrait_path = page.profile.image | prepend: 'assets/img/' %}
+        {% include figure.liquid path=portrait_path alt=page.profile.image_alt loading="eager" width="800" height="1000" cache_bust=true %}
+      </div>
+    {% endif %}
+  </div>
+  {% if page.announcements.enabled %}
+    <section class="academic-section">
+      <h2>News</h2>
+      {% include news.liquid limit=true %}
+    </section>
+  {% endif %}
+  {% if page.selected_papers %}
+    <section class="academic-section">
+      <h2>Selected publications</h2>
+      {% include selected_papers.liquid %}
+    </section>
+  {% endif %}
+</article>
