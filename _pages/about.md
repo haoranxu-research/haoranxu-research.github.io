@@ -25,6 +25,17 @@ editorial_section: about
   </figure>
 </section>
 
+<section class="selected-research inquiry-preview section-rule" aria-labelledby="selected-research" data-reveal>
+  <h2 class="eyebrow" id="selected-research">Selected research</h2>
+  <article class="preprint-entry" aria-labelledby="preprint-title">
+    <p class="micro-label preprint-status">Preprint &middot; 2026</p>
+    <h3 class="preprint-title" id="preprint-title"><a href="https://doi.org/10.5281/zenodo.23428428">Same Data, Different Domains: Representation Dependence in Adaptive Data Mixing</a></h3>
+    <p class="preprint-byline">Haoran Xu &middot; Zhejiang University</p>
+    <p class="preprint-summary">An empirical investigation of how domain partitioning affects adaptive data mixing, examining its consequences for learning, sampling behavior, and hierarchical stabilization.</p>
+    <a class="arrow-link" href="https://doi.org/10.5281/zenodo.23428428">Zenodo &middot; DOI: 10.5281/zenodo.23428428 <span aria-hidden="true">↗</span></a>
+  </article>
+</section>
+
 <section class="inquiry-preview section-rule" data-reveal>
   <div class="section-margin"><p class="eyebrow">An ongoing inquiry</p><span class="margin-symbol" aria-hidden="true">∴</span></div>
   <div class="inquiry-content">
