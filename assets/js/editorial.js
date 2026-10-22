@@ -10,24 +10,36 @@
     themeButton?.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
   };
   syncThemeButton();
+  let themeTransition;
+  const setTheme = (theme) => {
+    const update = () => {
+      root.dataset.theme = theme;
+      syncThemeButton();
+      document.dispatchEvent(new Event("editorial:theme"));
+    };
+    if (!motion.matches && document.startViewTransition) {
+      themeTransition?.skipTransition();
+      themeTransition = document.startViewTransition(update);
+    } else {
+      update();
+    }
+  };
   themeButton?.addEventListener("click", () => {
-    root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+    const theme = root.dataset.theme === "dark" ? "light" : "dark";
+    setTheme(theme);
     try {
-      localStorage.setItem("theme", root.dataset.theme);
+      localStorage.setItem("theme", theme);
     } catch (_) {}
-    syncThemeButton();
-    document.dispatchEvent(new Event("editorial:theme"));
   });
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
     let manual = null;
     try {
       manual = localStorage.getItem("theme");
     } catch (_) {}
-    if (!manual || manual === "system") {
-      root.dataset.theme = event.matches ? "dark" : "light";
-      syncThemeButton();
-      document.dispatchEvent(new Event("editorial:theme"));
-    }
+    if (!manual || manual === "system") setTheme(event.matches ? "dark" : "light");
+  });
+  motion.addEventListener("change", () => {
+    if (motion.matches) themeTransition?.skipTransition();
   });
 
   const reveals = document.querySelectorAll("[data-reveal]");
@@ -54,24 +66,30 @@
     const context = canvas.getContext("2d");
     if (!context) return () => {};
     const lines = 32;
-    const segments = 96;
+    const segments = 256;
     const observed = [];
     const imagined = [];
+    const smoothstep = (value) => {
+      const t = Math.max(0, Math.min(1, value));
+      return t * t * (3 - 2 * t);
+    };
     for (let line = 0; line < lines; line++) {
       const a = [],
         b = [];
+      const phase = line * 0.11;
       for (let index = 0; index <= segments; index++) {
-        const t = index / segments;
-        const envelope = Math.sin(t * Math.PI);
-        const phase = line * 0.11;
-        a.push([
-          42 + t * 556,
-          220 +
-            (line - (lines - 1) / 2) * 5.3 +
-            Math.sin(t * Math.PI * 2 + phase) * 40 * envelope +
-            Math.sin(t * Math.PI * 3 - phase * 0.6) * 15 * envelope,
-        ]);
-        const angle = t * Math.PI * 2;
+        const angle = (index / segments) * Math.PI * 2;
+        const waveX = 320 + Math.cos(angle) * 1000;
+        const u = (waveX + 180) / 1040;
+        // The wave is the lower slice of a much larger smooth closed form.
+        // Both shapes share the same winding; the initial return is offscreen.
+        // Use a smooth periodic curve throughout, so a cropped shoulder cannot
+        // become an angular bend as it enters the frame during deformation.
+        const sine = Math.sin(angle);
+        const waveY =
+          -1000 +
+          sine * (1220 + (line - (lines - 1) / 2) * 5.3 + Math.sin(u * Math.PI * 2 + phase) * 40 + Math.sin(u * Math.PI * 3 - phase * 0.6) * 15);
+        a.push([waveX, waveY]);
         const radius = 77 + line * 3.35;
         b.push([
           320 + Math.cos(angle) * radius * 1.25 + Math.sin(angle * 2 + phase * 0.2) * 18,
@@ -81,10 +99,13 @@
       observed.push(a);
       imagined.push(b);
     }
+    let shapeBlend = 0;
     let blend = 0,
       target = 0,
       frame = 0,
-      last = 0;
+      last = 0,
+      elapsed = 0,
+      inView = true;
     let pointerX = 0,
       pointerY = 0,
       currentX = 0,
@@ -97,15 +118,32 @@
     };
     readPalette();
     const point = (line, index) => {
-      const a = observed[line][index],
-        b = imagined[line][index];
+      const lower = Math.floor(index);
+      const upper = Math.min(lower + 1, segments);
+      const fraction = index - lower;
+      const a = observed[line][lower],
+        an = observed[line][upper];
+      const b = imagined[line][lower],
+        bn = imagined[line][upper];
+      const ax = a[0] + (an[0] - a[0]) * fraction;
+      const ay = a[1] + (an[1] - a[1]) * fraction;
+      const bx = b[0] + (bn[0] - b[0]) * fraction;
+      const by = b[1] + (bn[1] - b[1]) * fraction;
+      const x = ax + (bx - ax) * shapeBlend;
+      const y = ay + (by - ay) * shapeBlend;
       const envelope = Math.sin((index / segments) * Math.PI);
-      return [a[0] + (b[0] - a[0]) * blend + currentX * 13 * envelope, a[1] + (b[1] - a[1]) * blend + currentY * 10 * envelope];
+      const driftX = motion.matches ? 0 : Math.sin(elapsed * 0.18 + y * 0.007 + line * 0.025) * 5;
+      const driftY = motion.matches ? 0 : Math.sin(elapsed * 0.24 + x * 0.006 + line * 0.06) * 4;
+      return [x + (currentX * 13 + driftX) * envelope, y + (currentY * 10 + driftY) * envelope];
     };
     const draw = () => {
+      // A single continuous deformation of an already-complete field.
+      // The hidden return enters across the crop, never as a joining stroke.
+      shapeBlend = smoothstep(blend);
       context.setTransform(scale, 0, 0, scale, 0, 0);
       context.clearRect(0, 0, 640, 440);
       context.lineWidth = 0.7;
+      // One continuously deforming field at fixed opacity, not a crossfade.
       for (let line = 0; line < lines; line++) {
         context.beginPath();
         for (let index = 0; index <= segments; index++) {
@@ -119,7 +157,9 @@
       }
       context.globalAlpha = 1;
       for (let node = 0; node < 7; node++) {
-        const [x, y] = point(3 + node * 4, 10 + node * 12);
+        const u = (0.19 + node * 0.018) * (1 - shapeBlend) + ((10 + node * 12) / 96) * shapeBlend;
+        const progress = (u * segments + (motion.matches ? 0 : elapsed * 0.4)) % segments;
+        const [x, y] = point(3 + node * 4, progress);
         context.beginPath();
         context.arc(x, y, 3.3, 0, Math.PI * 2);
         context.fillStyle = palette[3];
@@ -130,21 +170,24 @@
       }
     };
     const tick = (time) => {
-      canvas.dataset.settled = "false";
       frame = 0;
-      const dt = Math.min(40, last ? time - last : 16);
+      if (last && time - last < 1000 / 30 - 1) {
+        frame = requestAnimationFrame(tick);
+        return;
+      }
+      const dt = Math.min(67, last ? time - last : 16);
       last = time;
+      elapsed += dt / 1000;
       const ease = 1 - Math.exp(-dt / 160);
-      blend += (target - blend) * ease;
+      blend += Math.sign(target - blend) * Math.min(Math.abs(target - blend), dt / 2600);
       currentX += (pointerX - currentX) * ease;
       currentY += (pointerY - currentY) * ease;
       draw();
-      if (Math.abs(blend - target) > 0.0002 || Math.abs(currentX - pointerX) > 0.002 || Math.abs(currentY - pointerY) > 0.002)
-        frame = requestAnimationFrame(tick);
-      else {
-        last = 0;
-        canvas.dataset.settled = "true";
-      }
+      const settling = Math.abs(blend - target) > 0.0002 || Math.abs(currentX - pointerX) > 0.002 || Math.abs(currentY - pointerY) > 0.002;
+      canvas.dataset.settled = String(!settling);
+      // Settled refers to the mode transition, not the quiet ambient flow.
+      if (inView && !document.hidden && !motion.matches) frame = requestAnimationFrame(tick);
+      else last = 0;
     };
     const update = () => {
       if (motion.matches) {
@@ -156,7 +199,7 @@
         currentY = 0;
         draw();
         canvas.dataset.settled = "true";
-      } else if (!frame && !document.hidden) frame = requestAnimationFrame(tick);
+      } else if (!frame && inView && !document.hidden) frame = requestAnimationFrame(tick);
     };
     const resize = () => {
       const width = canvas.getBoundingClientRect().width;
@@ -167,6 +210,20 @@
       draw();
     };
     new ResizeObserver(resize).observe(canvas);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(
+        ([entry]) => {
+          inView = entry.isIntersecting;
+          if (inView) update();
+          else {
+            cancelAnimationFrame(frame);
+            frame = 0;
+            last = 0;
+          }
+        },
+        { rootMargin: "80px" }
+      ).observe(canvas);
+    }
     canvas.addEventListener("pointermove", (event) => {
       if (motion.matches || event.pointerType === "touch") return;
       const rect = canvas.getBoundingClientRect();
@@ -200,6 +257,16 @@
     };
   }
 
+  document.querySelectorAll("[data-abstract-toggle]").forEach((button) => {
+    const abstract = document.getElementById(button.getAttribute("aria-controls"));
+    if (!abstract) return;
+    button.addEventListener("click", () => {
+      const expanded = button.getAttribute("aria-expanded") === "true";
+      button.setAttribute("aria-expanded", String(!expanded));
+      abstract.hidden = expanded;
+    });
+  });
+
   const tabs = Array.from(document.querySelectorAll(".research-tabs [role='tab']"));
   const setField = createLineStudy(document.querySelector("#research-field"));
   const setDirection = (mode, remember = false) => {
@@ -211,8 +278,6 @@
       panel.hidden = !selected;
       if (selected) panel.classList.add("is-changing");
     }
-    const caption = document.querySelector(".field-caption-text");
-    if (caption) caption.textContent = mode === "designing" ? "Structure, imagined." : "Structure, observed.";
     setField(mode);
     if (remember) history.replaceState(null, "", "#" + mode);
   };

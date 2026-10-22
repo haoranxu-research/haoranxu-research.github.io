@@ -69,12 +69,14 @@ set `$env:SITE_URL = 'https://haoranxu-research.github.io'` first.
 ## Publication boundary
 
 - `.local/` is ignored by Git and excluded from Jekyll. It contains local tools
-  and the **private CV draft**; the CV remains unpublished.
+  and private CV drafts; these drafts remain excluded.
 - Previews, credentials, manuscript folders, research data, incoming ZIP files,
   retired AI drafts, and duplicate article packages are not committed or published.
 - Approved essay sources in `_includes/reflections/` are required for the
   bilingual site and are committed.
-- Publications, CV, and Projects page files remain excluded from site output.
+- The CV page and the reviewed public PDF at `assets/pdf/haoran-xu-cv.pdf` are included.
+- Publications and Projects page files remain excluded from site output.
 - Only `_site`, never the whole project, is uploaded as the Pages artifact.
 
-Publishing the CV later requires separate approval and replacing `[Email]`.
+The public CV omits unconfirmed contact details and private manuscript information.
+Local changes must be reviewed before any commit, push, or deployment.

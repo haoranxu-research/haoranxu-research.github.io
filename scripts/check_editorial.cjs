@@ -37,7 +37,7 @@ async function main() {
   }
   async function checkPage(page, viewport) {
     assert.equal(await page.locator("h1").count(), 1, "One main heading");
-    assert.equal(await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link").count(), 3);
+    assert.equal(await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link").count(), 4);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `Overflow at ${viewport.width}px`);
     assert.equal(await page.locator("img").evaluateAll((images) => images.some((i) => !i.complete || !i.naturalWidth)), false, "Images loaded");
     const ratios = await page.evaluate(() => {
@@ -85,6 +85,7 @@ async function main() {
         ["about", "/"],
         ["research", "/research/"],
         ["reflections", "/reflections/"],
+        ["cv", "/cv/"],
       ]) {
         assert.equal((await page.goto(base + route, { waitUntil: "networkidle" })).status(), 200);
         await checkPage(page, viewport);
@@ -98,7 +99,7 @@ async function main() {
         () => document.querySelector("canvas").dataset.settled === "true" && document.querySelector("canvas").dataset.mode === "designing"
       );
       assert.equal(await page.getByRole("tab", { name: "02 Designing" }).getAttribute("aria-selected"), "true");
-      assert.ok(await page.getByRole("tabpanel").getByText("An exploratory vision").isVisible());
+      assert.ok(await page.locator("#designing-panel").getByRole("heading", { name: "Designing learning." }).isVisible());
       assert.notEqual(await page.locator("canvas").evaluate((canvas) => canvas.toDataURL()), before, "Canvas morphed");
       await checkPage(page, viewport);
       await revealAndCapture(page, `research-${width}-designing.png`);
@@ -124,6 +125,7 @@ async function main() {
         ["about", "/"],
         ["research", "/research/"],
         ["reflections", "/reflections/"],
+        ["cv", "/cv/"],
       ]) {
         await page.goto(base + route, { waitUntil: "networkidle" });
         await checkPage(page, viewport);
@@ -131,7 +133,7 @@ async function main() {
       }
       assert.deepEqual(errors, []);
       results.push(
-        `${width}px: three pages, light/dark contrast, assets, layout, research keyboard/deep link, Canvas morph, bilingual essay, and saved theme PASS`
+        `${width}px: four pages, light/dark contrast, assets, layout, research keyboard/deep link, Canvas morph, bilingual essay, and saved theme PASS`
       );
       await context.close();
     }

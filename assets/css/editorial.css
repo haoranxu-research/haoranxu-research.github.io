@@ -13,15 +13,32 @@
 }
 html[data-theme="dark"] {
   --paper: #222623;
-  --ink: #eee8dd;
-  --muted: #b7bbb0;
-  --terra: #dfa88e;
-  --terra-art: #cf967e;
+  --ink: #f1f3ec;
+  --body: #e0e5de;
+  --muted: #bfcac0;
+  --terra: #add0b5;
+  --terra-art: #88ad92;
   --sage: #acbfaf;
   --sage-art: #9db2a4;
   --line: #454b43;
   color-scheme: dark;
 }
+::view-transition-group(root),
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 360ms;
+  animation-timing-function: ease-in-out;
+}
+@supports not (view-transition-name: root) {
+  @media (prefers-reduced-motion: no-preference) {
+    body.editorial {
+      transition:
+        background-color 360ms ease-in-out,
+        color 360ms ease-in-out;
+    }
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -451,7 +468,7 @@ html[data-theme="dark"] .moon-icon {
 .study-heading {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 25px;
   padding: 25px 0 30px;
 }
@@ -518,7 +535,7 @@ html[data-theme="dark"] .moon-icon {
 }
 .research-panels {
   padding-top: 34px;
-  min-height: 425px;
+  min-height: 350px;
 }
 .direction-status {
   display: flex;
@@ -545,7 +562,7 @@ html[data-theme="dark"] .moon-icon {
   font-size: 43px;
   letter-spacing: -0.035em;
   line-height: 1.12;
-  margin: 18px 0 23px;
+  margin: 0 0 23px;
 }
 .research-panel > p:not(.direction-status) {
   font-size: 15px;
@@ -587,7 +604,7 @@ html[data-theme="dark"] .moon-icon {
   justify-content: space-between;
   gap: 30px;
   align-items: center;
-  padding: 60px 0 74px;
+  padding: 24px 0 40px;
 }
 .page-endnote p {
   color: var(--muted);
@@ -978,11 +995,11 @@ html[data-theme="dark"] .moon-icon {
   }
   .research-panels {
     padding-top: 0;
-    min-height: 450px;
+    min-height: 360px;
   }
   .research-panel h2 {
     font-size: 39px;
-    margin: 17px 0 20px;
+    margin: 0 0 20px;
   }
   .research-panel > p:not(.direction-status) {
     max-width: none;
@@ -1047,4 +1064,100 @@ html[data-theme="dark"] .moon-icon {
     opacity: 1;
     transform: none;
   }
+}
+
+/* Research experience follows the existing editorial grid. */
+.experience-entry + .experience-entry {
+  margin-top: 32px;
+}
+.experience-entry h3 {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+.experience-meta {
+  margin: 0 0 15px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.experience-copy {
+  max-width: 740px;
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.85;
+}
+.experience-content > .arrow-link {
+  margin-top: 10px;
+}
+
+.public-research-list {
+  min-width: 0;
+}
+.preprint-entry + .preprint-entry {
+  margin-top: 36px;
+  padding-top: 30px;
+  border-top: 1px solid var(--line);
+}
+.paper-resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+.resource-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 4px 12px;
+  border: 1px solid var(--muted);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  text-decoration: none;
+  cursor: pointer;
+}
+.resource-button:hover,
+.resource-button[aria-expanded="true"] {
+  border-color: var(--terra);
+  color: var(--terra);
+}
+.resource-button:focus-visible {
+  outline: 2px solid var(--terra);
+  outline-offset: 3px;
+}
+.paper-abstract {
+  max-width: 72ch;
+  margin-top: 20px;
+}
+.paper-abstract p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.85;
+  text-align: left;
+  word-spacing: normal;
+}
+
+/* Keep dark-mode body copy distinct from secondary metadata. */
+html[data-theme="dark"] body.editorial {
+  color: var(--body);
+}
+html[data-theme="dark"] :is(h1, h2, h3, .wordmark) {
+  color: var(--ink);
+}
+html[data-theme="dark"]
+  :is(.about-prose, .inquiry-link p, .reflection-preview p:not(.eyebrow), .research-panel > p, .experience-copy, .paper-abstract p, .reader-panel) {
+  color: var(--body);
+}
+.research-experience-link {
+  margin-top: 26px;
 }

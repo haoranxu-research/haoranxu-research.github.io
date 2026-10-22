@@ -10,7 +10,6 @@ nav_order: 2
 <section class="reflections-intro">
   <p class="eyebrow" data-enter>03 / Reflections</p>
   <h1 class="editorial-title" data-enter style="--delay: 80ms">Room for a little<br><em>reflection.</em></h1>
-  <p class="page-deck" data-enter style="--delay: 160ms">Personal essays, and questions worth returning to.</p>
 </section>
 
 <section class="essay-index" aria-label="Personal essays">

@@ -1,0 +1,14 @@
+# Only already-public research belongs in this file.
+# Add a real code_url or supplementary_links entry when publicly available.
+- id: "same-data-different-domains"
+  title: "Same Data, Different Domains: Representation Dependence in Adaptive Data Mixing"
+  authors: ["Haoran Xu"]
+  affiliation: "Zhejiang University"
+  year: 2026
+  venue: ""
+  status: "Preprint"
+  abstract: "The same training data can be divided into domains in many ways. We ask whether this choice affects learning when an adaptive data mixer assigns sampling weights to those domains. We use a controlled language-modeling task where favoring clean data improves learning, comparing two quality groups with a finer partition into sixteen groups. The examples remain unchanged and the sampling policies are learned separately. The finer partition increases validation loss by 0.01647 nats per token across 32 paired seeds, removing about one-quarter of the benefit of adaptive sampling over a fixed mixture. To examine how sampling decisions affect learning, a separate experiment holds the overall proportions of data sources fixed while changing which examples are sampled within one source. Preserving the full repetition pattern while randomly permuting example identities reproduces nearly the same learning penalty. Increasing the number of examples used to estimate scores for sampling-weight updates substantially reduces concentration and learning harm, although harm remains positive at the largest tested budget. We then ask whether a mixer can become less sensitive to subdivisions without losing the ability to favor useful data. A hierarchical rule allows weights to adapt between meaningful groups while limiting changes within them. It reduces sensitivity while preserving adaptive-sampling benefits, including under natural semantic subdivisions with the same controlled quality objective. When the supplied grouping is sufficiently inaccurate, however, ignoring it works better. Our results show that how training data are divided can affect what a model learns, and that improving stability requires care in deciding which distinctions to preserve."
+  abstract_source_url: "https://api.datacite.org/dois/10.5281/zenodo.23428428"
+  paper_url: "https://doi.org/10.5281/zenodo.23428428"
+  code_url: ""
+  supplementary_links: []

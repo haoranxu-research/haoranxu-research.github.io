@@ -230,7 +230,6 @@ exclude:
   - VALIDATION.md
   - _pages/projects.md
   - _pages/publications.md
-  - _pages/cv.md
   - AGENTS.md
   - al-folio-upgrade-report.md
   - bin/

@@ -1,0 +1,59 @@
+<div class="public-research-list">
+  {% for paper in site.data.publications %}
+    {% assign paper_url = paper.paper_url | default: '' | strip %}
+    {% assign code_url = paper.code_url | default: '' | strip %}
+    {% assign abstract = paper.abstract | default: '' | strip %}
+    <article class="preprint-entry" aria-labelledby="paper-{{ paper.id | escape }}">
+      <p class="micro-label preprint-status">
+        {% if paper.venue and paper.venue != '' %}{{ paper.venue | escape }} &middot; {% endif -%}
+        {{- paper.status | escape }} &middot; {{ paper.year }}
+      </p>
+      <h3 class="preprint-title" id="paper-{{ paper.id | escape }}">
+        {% if paper_url != '' -%}
+          <a href="{{ paper_url | escape }}">{{ paper.title | escape }}</a>
+        {%- else -%}
+          {{- paper.title | escape -}}
+        {%- endif %}
+      </h3>
+      <p class="preprint-byline">
+        {{ paper.authors | join: ', ' | escape -}}
+        {%- if paper.affiliation and paper.affiliation != '' %} &middot; {{ paper.affiliation | escape }}{% endif %}
+      </p>
+      <div class="paper-resources" aria-label="Resources for {{ paper.title | escape }}">
+        {% if abstract != '' -%}
+          <button class="resource-button" type="button" aria-expanded="false" aria-controls="abstract-{{ paper.id | escape }}" data-abstract-toggle>
+            Abstract
+          </button>
+        {%- endif %}
+        {% if paper_url != '' -%}
+          <a class="resource-button" href="{{ paper_url | escape }}">Paper</a>
+        {%- endif %}
+        {% if code_url != '' -%}
+          <a class="resource-button" href="{{ code_url | escape }}">Code</a>
+        {%- endif %}
+        {% for resource in paper.supplementary_links %}
+          {% assign resource_url = resource.url | default: '' | strip %}
+          {% assign resource_label = resource.label | default: '' | strip %}
+          {% if resource_url != '' and resource_label != '' -%}
+            <a class="resource-button" href="{{ resource_url | escape }}">{{ resource_label | escape }}</a>
+          {%- endif %}
+        {% endfor %}
+      </div>
+      {% if abstract != '' %}
+        <div class="paper-abstract" id="abstract-{{ paper.id | escape }}" hidden>
+          <p>{{ abstract | escape }}</p>
+        </div>
+      {% endif %}
+    </article>
+  {% endfor %}
+</div>
+<noscript>
+  <style>
+    [data-abstract-toggle] {
+      display: none;
+    }
+    .paper-abstract[hidden] {
+      display: block !important;
+    }
+  </style>
+</noscript>

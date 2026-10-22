@@ -10,6 +10,7 @@ PRIVATE_PARTS = {
     ".local", ".bundle", ".env", "private", "research-data", "manuscripts",
     "preview", "node_modules", "vendor",
 }
+PUBLIC_PDFS = {"assets/pdf/haoran-xu-cv.pdf"}
 PRIVATE_SUFFIXES = {".pdf", ".tex", ".zip", ".pem", ".key", ".ipynb"}
 SECRET = re.compile(
     rb"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|"
@@ -22,7 +23,7 @@ def private(path):
     return (
         bool(set(path.parts) & PRIVATE_PARTS)
         or any(part.startswith(".env.") for part in path.parts)
-        or path.suffix.lower() in PRIVATE_SUFFIXES
+        or (path.suffix.lower() in PRIVATE_SUFFIXES and path.as_posix() not in PUBLIC_PDFS)
         or path.as_posix().startswith(("docs/archive/", "docs/on-living-source/"))
     )
 
@@ -33,7 +34,7 @@ parser.add_argument("--site", type=Path)
 args = parser.parse_args()
 errors = []
 if args.source:
-    tracked = subprocess.check_output(["git", "ls-files", "-z"]).decode("utf-8").split("\0")
+    tracked = subprocess.check_output(["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"]).decode("utf-8").split("\0")
     for name in filter(None, tracked):
         path = Path(name)
         if private(path):
@@ -48,10 +49,12 @@ if args.site:
             continue
         relative = path.relative_to(root)
         if private(relative) or relative.parts[0] not in {
-            "assets", "research", "reflections", "index.html", "404.html",
+            "assets", "research", "reflections", "cv", "index.html", "404.html",
             "robots.txt", "sitemap.xml", "feed.xml", ".nojekyll",
         }:
             errors.append(f"Unexpected publication file: {relative}")
+        if relative.as_posix() in PUBLIC_PDFS and not path.read_bytes().startswith(b"%PDF-"):
+            errors.append(f"Invalid public PDF: {relative}")
         if SECRET.search(path.read_bytes()):
             errors.append(f"Possible credential in publication output: {relative}")
         if path.suffix not in {".html", ".css", ".xml", ".txt"}:
@@ -67,7 +70,7 @@ if args.site:
                 target = root / unquote(url.path).lstrip("/") if url.path.startswith("/") else path.parent / unquote(url.path)
                 if not target.is_file():
                     errors.append(f"Broken CSS resource in {relative}: {url.path}")
-    for name in ("index.html", "research/index.html", "reflections/index.html", "reflections/on-living/index.html"):
+    for name in ("index.html", "cv/index.html", "research/index.html", "reflections/index.html", "reflections/on-living/index.html"):
         content = (root / name).read_text(encoding="utf-8")
         canonical = re.search(r'rel="canonical"\s+href="([^"]+)"', content)
         if not canonical or urlsplit(canonical.group(1)).netloc != "haoranxu-research.github.io":

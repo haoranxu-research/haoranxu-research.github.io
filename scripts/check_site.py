@@ -40,7 +40,7 @@ for page in root.rglob("*.html"):
         if not image.get("alt"):
             errors.append(f"{page.relative_to(root)} has an image without alt text")
 
-for required in ("index.html", "research/index.html", "reflections/index.html", "404.html"):
+for required in ("index.html", "research/index.html", "cv/index.html", "reflections/index.html", "404.html"):
     if not (root / required).exists():
         errors.append(f"Missing page: {required}")
 
