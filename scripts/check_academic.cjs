@@ -18,7 +18,11 @@ async function main() {
       const cv = page.locator(".about-links").getByRole("link", { name: "Academic CV", exact: true });
       const bounds = await cv.boundingBox();
       assert.ok(bounds && bounds.y >= 0 && bounds.y + bounds.height < 844, "CV visible in first viewport");
-      assert.equal(await page.locator('a[href^="mailto:"]').count(), 0, "No unconfirmed email link");
+      assert.deepEqual(
+        await page.locator('a[href^="mailto:"]').evaluateAll((links) => links.map((link) => link.getAttribute("href"))),
+        ["mailto:haoranxu1104@gmail.com", "mailto:haoranxu2024@zju.edu.cn"],
+        "Confirmed Gmail is primary, with ZJU email as secondary"
+      );
       assert.equal(await page.locator(".public-research").count(), 0, "No public preprint block on home");
       assert.equal(await page.getByText("Same Data, Different Domains", { exact: false }).count(), 0, "No duplicate preprint title on home");
       const pdfURL = new URL(await cv.getAttribute("href"), base).href;
@@ -48,7 +52,7 @@ async function main() {
         assert.ok(!(await page.locator("footer").innerText()).includes("A space for learning"), "No footer slogan");
       }
       results.push(
-        `${width}px: first-screen CV, hidden unconfirmed email, preprint placement, PDF response/download integrity, active navigation, and public copy PASS`
+        `${width}px: first-screen CV, confirmed email links, preprint placement, PDF response/download integrity, active navigation, and public copy PASS`
       );
       await context.close();
     }

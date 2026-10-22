@@ -15,5 +15,6 @@ nav_order: 4
     <a class="arrow-link" href="{{ site.data.contact.cv_path | relative_url }}" type="application/pdf">View PDF <span aria-hidden="true">&#8599;</span></a>
     <a class="arrow-link" href="{{ '/research/' | relative_url }}">Research experience <span aria-hidden="true">&#8599;</span></a>
     {% if site.data.contact.email and site.data.contact.email != '' %}<a class="arrow-link" href="mailto:{{ site.data.contact.email | escape }}">Email <span aria-hidden="true">&#8599;</span></a>{% endif %}
+    {% if site.data.contact.institutional_email and site.data.contact.institutional_email != '' %}<a class="arrow-link" href="mailto:{{ site.data.contact.institutional_email | escape }}">ZJU Email <span aria-hidden="true">&#8599;</span></a>{% endif %}
   </div>
 </section>
