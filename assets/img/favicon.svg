@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#235c83"/><text x="32" y="42" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" fill="white">HX</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="13" fill="#F3F0E8"/>
+  <circle cx="50" cy="22" r="5" fill="#D5AE68"/>
+  <path d="M34 8 12 43 33 40Z" fill="#45675F"/>
+  <path d="m37 16 10 27-11-3Z" fill="#8EAA99"/>
+  <path d="M10 46c12 1 28 1 42-2l-7 8H20c-4 0-7-2-10-6Z" fill="#34564F"/>
+  <path d="M22 57h19" stroke="#8EAA99" stroke-width="2" stroke-linecap="round"/>
+</svg>
