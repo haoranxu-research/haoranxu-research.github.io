@@ -17,9 +17,8 @@ editorial_section: about
     <div class="about-links" data-enter style="--delay: 300ms">
       <a class="arrow-link" href="{{ site.data.contact.cv_path | relative_url }}" type="application/pdf">Academic CV <span aria-hidden="true">&#8599;</span></a>
       <a class="arrow-link" href="{{ site.data.contact.github_url }}" rel="me noopener" target="_blank">GitHub <span aria-hidden="true">↗</span></a>
-      {% if site.data.contact.email and site.data.contact.email != '' %}<a class="arrow-link" href="mailto:{{ site.data.contact.email | escape }}">Email <span aria-hidden="true">↗</span></a>{% endif %}
-      {% if site.data.contact.institutional_email and site.data.contact.institutional_email != '' %}<a class="arrow-link" href="mailto:{{ site.data.contact.institutional_email | escape }}">ZJU Email <span aria-hidden="true">↗</span></a>{% endif %}
     </div>
+    <div data-enter style="--delay: 300ms">{% include contact_links.liquid %}</div>
   </div>
   <figure class="portrait-study" data-enter style="--delay: 160ms">
     <div class="portrait-frame"><img src="{{ '/assets/img/haoran-xu-original.jpg' | relative_url }}" width="1706" height="1279" alt="Haoran Xu outdoors beside a lake" fetchpriority="high"></div>

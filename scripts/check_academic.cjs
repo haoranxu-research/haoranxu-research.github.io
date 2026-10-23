@@ -19,10 +19,19 @@ async function main() {
       const bounds = await cv.boundingBox();
       assert.ok(bounds && bounds.y >= 0 && bounds.y + bounds.height < 844, "CV visible in first viewport");
       assert.deepEqual(
-        await page.locator('a[href^="mailto:"]').evaluateAll((links) => links.map((link) => link.getAttribute("href"))),
-        ["mailto:haoranxu1104@gmail.com", "mailto:haoranxu2024@zju.edu.cn"],
+        await page.locator(".contact-addresses a").evaluateAll((links) =>
+          links.map((link) => {
+            const url = new URL(link.href);
+            return { text: link.textContent.trim(), origin: url.origin, view: url.searchParams.get("view"), to: url.searchParams.get("to") };
+          })
+        ),
+        [
+          { text: "haoranxu1104@gmail.com", origin: "https://mail.google.com", view: "cm", to: "haoranxu1104@gmail.com" },
+          { text: "haoranxu2024@zju.edu.cn", origin: "https://mail.google.com", view: "cm", to: "haoranxu2024@zju.edu.cn" },
+        ],
         "Confirmed Gmail is primary, with ZJU email as secondary"
       );
+      assert.equal(await page.locator('a[href^="mailto:"]').count(), 0, "No OS mail handler needed");
       assert.equal(await page.locator(".public-research").count(), 0, "No public preprint block on home");
       assert.equal(await page.getByText("Same Data, Different Domains", { exact: false }).count(), 0, "No duplicate preprint title on home");
       const pdfURL = new URL(await cv.getAttribute("href"), base).href;

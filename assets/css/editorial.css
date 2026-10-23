@@ -264,6 +264,17 @@ html[data-theme="dark"] .moon-icon {
   color: var(--terra);
   background-size: 100% 2px;
 }
+.contact-addresses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.contact-addresses a {
+  overflow-wrap: anywhere;
+}
 .about-links {
   margin-top: 31px;
   display: flex;

@@ -1,0 +1,28 @@
+{% assign primary_email = site.data.contact.email | default: '' | strip %}
+{% assign institutional_email = site.data.contact.institutional_email | default: '' | strip %}
+{% if primary_email != '' or institutional_email != '' %}
+  <div class="contact-addresses" aria-label="Email addresses">
+    {% if primary_email != '' %}
+      <a
+        class="text-link"
+        href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to={{ primary_email | url_encode }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Compose an email in Gmail"
+      >
+        {{- primary_email | escape -}}
+      </a>
+    {% endif %}
+    {% if institutional_email != '' %}
+      <a
+        class="text-link"
+        href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to={{ institutional_email | url_encode }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Compose an email in Gmail"
+      >
+        {{- institutional_email | escape -}}
+      </a>
+    {% endif %}
+  </div>
+{% endif %}
