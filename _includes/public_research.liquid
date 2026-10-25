@@ -3,6 +3,7 @@
     {% assign paper_url = paper.paper_url | default: '' | strip %}
     {% assign code_url = paper.code_url | default: '' | strip %}
     {% assign abstract = paper.abstract | default: '' | strip %}
+    {% assign summary = paper.summary | default: '' | strip %}
     <article class="preprint-entry" aria-labelledby="paper-{{ paper.id | escape }}">
       <p class="micro-label preprint-status">
         {% if paper.venue and paper.venue != '' %}{{ paper.venue | escape }} &middot; {% endif -%}
@@ -19,6 +20,9 @@
         {{ paper.authors | join: ', ' | escape -}}
         {%- if paper.affiliation and paper.affiliation != '' %} &middot; {{ paper.affiliation | escape }}{% endif %}
       </p>
+      {% if summary != '' %}
+        <p class="preprint-summary">{{ summary | escape }}</p>
+      {% endif %}
       <div class="paper-resources" aria-label="Resources for {{ paper.title | escape }}">
         {% if abstract != '' -%}
           <button class="resource-button" type="button" aria-expanded="false" aria-controls="abstract-{{ paper.id | escape }}" data-abstract-toggle>

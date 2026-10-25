@@ -2221,7 +2221,9 @@
 
   await yieldToPage();
   // One world and one clock for the gallery, fullscreen and Reflection frame.
-  const initialTime = Number(params.get("t"));
+  // The embedded painting opens at a fresh point along its first hour of travel.
+  // Explicit time links remain reproducible, including t=0.
+  const initialTime = params.has("t") ? Number(params.get("t")) : embedded ? Math.random() * 3600 : 0;
   let elapsed = Number.isFinite(initialTime) ? Math.max(0, initialTime) : 0,
     distance = Number(params.get("d")) || elapsed * 23;
   let previews = {};
@@ -2236,7 +2238,7 @@
   }
   const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
   let playing = !motionPreference.matches,
-    speed = 1,
+    speed = embedded ? 2 : 1,
     last = 0,
     lastFrame = 0,
     width = 0,
@@ -2334,6 +2336,7 @@
     document.querySelector("#paceButton").innerHTML = `${speed === 0.5 ? "慢行" : speed === 2 ? "轻快" : "悠游"} <span>${speed}×</span>`;
     document.querySelector("#paceButton").setAttribute("aria-label", `旅行速度：${speed}倍`);
   }
+  setSpeed(speed);
   document.querySelector("#paceButton").addEventListener("click", () => setSpeed(speeds[(speeds.indexOf(speed) + 1) % speeds.length]));
   async function fullscreen() {
     try {
@@ -2458,5 +2461,11 @@
   });
   resize();
   document.body.classList.remove("no-js");
-  requestAnimationFrame(frame);
-})();
+  requestAnimationFrame(() => {
+    document.documentElement.classList.remove("journey-loading");
+    requestAnimationFrame(frame);
+  });
+})().catch((error) => {
+  console.error(error);
+  document.documentElement.classList.remove("journey-loading");
+});

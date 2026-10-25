@@ -45,15 +45,23 @@ nav_order: 1
     <article class="experience-entry">
       <h3>Machine Learning Research</h3>
       <p class="experience-meta">2026&ndash;Present</p>
-      <p class="experience-copy">I independently develop research questions and lead their investigation, from mathematical and empirical analysis through experimental design, interpretation, and manuscript preparation. My work explores how learning systems adapt, behave, and generalize.</p>
-      <p class="experience-copy">I use controlled experiments, model interventions, and behavioral evaluation to examine learning systems, alongside statistical comparisons and robustness checks to assess the evidence behind an interpretation.</p>
+      <p class="experience-copy">My recent work spans several areas of machine learning. The questions below reflect some of the projects I have explored, rather than a fixed research agenda.</p>
+      <h4 class="experience-topic">Learning and Adaptation</h4>
+      <p class="experience-copy">How does a model change when it learns from additional information? I have studied how different ways of updating a model affect its subsequent behavior.</p>
+      <h4 class="experience-topic">Multimodal Reasoning</h4>
+      <p class="experience-copy">How do models use visual information when they compare or reason about what they see? I have investigated model behavior using controlled visual tasks and targeted interventions.</p>
+      <h4 class="experience-topic">Probabilistic Prediction</h4>
+      <p class="experience-copy">How does the quality of a prediction depend on what information is available and how it is evaluated? I have examined predictive methods across different evaluation settings.</p>
+      <h4 class="experience-topic">Data Organization and Learning</h4>
+      <p class="experience-copy">Can different ways of grouping the same training examples lead to different learning outcomes? I explored this question through adaptive data mixing, with a public preprint linked below.</p>
+      <p class="experience-copy">Across these projects, I have worked on developing research questions, designing experiments, analyzing results, and preparing manuscripts.</p>
+      <p class="experience-copy">Two research manuscripts are currently under peer review. Some ongoing work is described at a high level to preserve anonymity during the review process.</p>
     </article>
     <article class="experience-entry">
       <h3>Earlier Machine Learning Research</h3>
       <p class="experience-meta">2025&ndash;2026 &middot; Zhejiang University &middot; Supervised by Prof. Xinggao Liu</p>
       <p class="experience-copy">I worked on machine learning for soft sensing in biopharmaceutical processes, using industrial multivariate time series from erythromycin fermentation. I explored regression models and examined prediction errors and distribution shifts across production settings.</p>
     </article>
-    <p class="experience-copy">Two research manuscripts are currently under peer review.</p>
     <a class="arrow-link" href="{{ site.data.contact.cv_path | relative_url }}" type="application/pdf">Download Academic CV <span aria-hidden="true">&#8599;</span></a>
   </div>
 </section>

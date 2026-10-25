@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#ede8dc" />
     <title>Still, Wandering · V3 — A Living Painted World</title>
+    <script>
+      // Hide the fixed fallback poster while preparing the randomized first frame.
+      try {
+        if (document.createElement("canvas").getContext("2d")) {
+          document.documentElement.classList.add("journey-loading");
+          document.documentElement.style.backgroundColor = getComputedStyle(parent.document.body).backgroundColor;
+        }
+      } catch {}
+    </script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="no-js embedded">
@@ -58,6 +67,7 @@
       if (canPaint) {
         const script = document.createElement("script");
         script.src = "runtime.js";
+        script.onerror = () => document.documentElement.classList.remove("journey-loading");
         document.head.append(script);
       }
     </script>

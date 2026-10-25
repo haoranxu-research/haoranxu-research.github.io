@@ -1103,6 +1103,13 @@ html[data-theme="dark"] .moon-icon {
   font-size: 13px;
   line-height: 1.7;
 }
+.experience-topic {
+  margin: 22px 0 6px;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+}
 .experience-copy {
   max-width: 740px;
   margin: 0 0 18px;

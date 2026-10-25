@@ -449,3 +449,18 @@ aside p {
 .embedded .static-entry {
   display: none;
 }
+.embedded {
+  background: transparent;
+}
+.embedded .artwork {
+  transition: opacity 400ms ease;
+}
+.journey-loading body.embedded .artwork {
+  opacity: 0;
+  background-image: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .embedded .artwork {
+    transition: none;
+  }
+}
