@@ -625,6 +625,15 @@ html[data-theme="dark"] .moon-icon {
 .reflections-intro {
   padding-bottom: 44px;
 }
+.reflection-journey {
+  margin-bottom: 48px;
+}
+.reflection-journey iframe {
+  display: block;
+  width: 100%;
+  height: clamp(300px, 36vw, 430px);
+  border: 0;
+}
 .draft-note {
   display: flex;
   gap: 12px;

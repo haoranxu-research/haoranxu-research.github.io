@@ -12,6 +12,15 @@ nav_order: 2
   <h1 class="editorial-title" data-enter style="--delay: 80ms">Room for a little<br><em>reflection.</em></h1>
 </section>
 
+<section class="reflection-journey" aria-label="Still, Wandering — an animated landscape">
+  <iframe
+    src="{{ '/assets/journey-v3/frame.html' | relative_url }}"
+    title="Still, Wandering: a painted train journey through changing landscapes and seasons"
+    loading="lazy"
+    tabindex="-1"
+  ></iframe>
+</section>
+
 <section class="essay-index" aria-label="Personal essays">
   {% assign essays = site.reflections | sort: 'order' %}
   {% for essay in essays %}

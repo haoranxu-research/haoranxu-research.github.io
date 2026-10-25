@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ede8dc" />
+    <title>Still, Wandering · V3 — A Living Painted World</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="no-js">
+    <main class="gallery">
+      <header class="masthead">
+        <a class="wordmark" href="./" aria-label="往远方，首页"><span class="mark">↗</span> STILL, WANDERING</a>
+        <span class="edition">AN EVER-UNFOLDING PAINTING <i>—</i> V3 · THE LIVING JOURNEY</span>
+        <button class="text-button" id="aboutButton" aria-expanded="false" aria-controls="about">关于这段旅途 <span>↗</span></button>
+      </header>
+      <section class="artwork" aria-label="一列小火车穿过不断延展的手绘风景">
+        <canvas id="world" role="img" aria-label="动态油画：火车穿过云海、海岸、花野与夜色"></canvas>
+        <div class="art-grain" aria-hidden="true"></div>
+        <div class="painting-title" aria-hidden="true"><span>A LITTLE FURTHER,</span><span>forever.</span></div>
+        <div class="scene-note"><span class="live-dot"></span><span id="sceneLabel">云端的金色时刻</span></div>
+        <button id="enterButton" class="enter-button" title="打开独立版本" aria-label="打开独立版本">↗</button>
+        <a class="static-entry" href="./index.html?mode=standalone" target="_blank" rel="noopener" aria-label="打开独立作品">↗</a>
+        <div class="controls">
+          <button id="playButton" title="暂停旅途" aria-label="暂停旅途">Ⅱ</button>
+          <span class="control-rule"></span>
+          <button id="paceButton" title="调整旅行速度" aria-label="旅行速度：悠游">悠游 <span>1×</span></button>
+          <span class="control-rule"></span>
+          <button id="fullscreenButton" title="全屏欣赏" aria-label="全屏欣赏">⛶</button>
+        </div>
+        <div class="art-caption">NO DESTINATION. JUST THE JOURNEY.</div>
+      </section>
+      <footer class="colophon">
+        <div>
+          <span class="eyebrow">THE ART OF GOING NOWHERE</span>
+          <h1>往远方<span>，</span></h1>
+        </div>
+        <p>不必抵达什么地方。<br />让时间慢下来，看世界一笔一笔地展开。</p>
+        <div class="journey-index">
+          <span>此刻，正在经过</span>
+          <div><span id="chapterNumber">01</span><span class="index-line"></span><span id="chapterName">金色云海</span></div>
+        </div>
+      </footer>
+      <aside id="about" hidden>
+        <button id="closeAbout" aria-label="关闭">×</button><span class="eyebrow">A PAINTING WITHOUT AN END</span>
+        <h2>一幅永远不会画完的画。</h2>
+        <p>小火车一直向前。从云间山谷到花海，从屋檐听雨的小镇到守着月光的灯塔。树叶渐黄，雪落下来，春天又在远方生长。</p>
+        <p>没有终点，没有需要完成的事。你可以暂停在喜欢的一刻，也可以只是让它陪伴。</p>
+        <span class="about-foot">空格 暂停 / 继续　·　F 全屏　·　方向键 调整速度</span>
+      </aside>
+    </main>
+    <script>
+      // If Canvas is unavailable, the quiet static painting remains usable.
+      let canPaint = false;
+      try {
+        canPaint = !!document.createElement("canvas").getContext("2d");
+      } catch {}
+      if (canPaint) {
+        const script = document.createElement("script");
+        script.src = "runtime.js";
+        document.head.append(script);
+      }
+    </script>
+  </body>
+</html>
