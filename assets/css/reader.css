@@ -25,9 +25,9 @@
   padding-top: 12px;
 }
 .essay-index-copy h2 {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 38px;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
   line-height: 1.3;
   transition: color 180ms;
 }
@@ -35,7 +35,7 @@
   color: var(--terra);
 }
 .essay-index-title-zh {
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, SimSun, serif;
+  font-family: var(--sans);
   font-size: 15px;
   color: var(--muted);
   margin-top: 8px;
@@ -78,17 +78,17 @@
   padding: 47px 0 30px;
 }
 .reader-title {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 62px;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.025em;
   line-height: 1.2;
   margin: 16px 0 10px;
   text-wrap: balance;
 }
 .reader-title[lang="zh-Hans"] {
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, SimSun, serif;
+  font-family: var(--sans);
   font-size: 40px;
-  letter-spacing: 0.025em;
+  letter-spacing: 0;
   line-height: 1.6;
 }
 .reader-subtitle {
@@ -214,8 +214,9 @@
 }
 .reader-language-heading {
   display: none;
+  font-family: var(--sans);
   font-size: 30px;
-  font-weight: 400;
+  font-weight: 500;
   margin-bottom: 26px;
 }
 .reader-end {
